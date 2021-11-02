@@ -6,6 +6,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
+import org.apache.cordova.LOG;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -108,6 +109,12 @@ public class CDVIonicKeyboard extends CordovaPlugin {
 
                             int pixelHeightDiff = (int)(heightDiff / density);
                             if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
+                                try{
+                                    //keyboard up의 animation 동작 후 페이지 size를 줄이기 위해 200ms sleep 적용
+                                    Thread.sleep(200);
+                                }catch(InterruptedException e){
+                                    LOG.d("Keyboard", "onGlobalLayout: Keyboard Thread sleep error");
+                                }
                                 String msg = "S" + Integer.toString(pixelHeightDiff);
                                 result = new PluginResult(PluginResult.Status.OK, msg);
                                 result.setKeepCallback(true);
