@@ -365,6 +365,14 @@ static IMP WKOriginalImp;
     [self.webView endEditing:YES];
 }
 
+- (void)resetKeyboardHeight:(CDVInvokedUrlCommand *)command
+{
+    if(self.isWK){
+        [self setKeyboardHeight:0 delay:0.01];
+    }
+    [self.commandDelegate evalJs:@"Keyboard.fireOnResetKeyboardHeight();"];
+}
+
 - (void)setResizeMode:(CDVInvokedUrlCommand *)command
 {
     NSString * mode = [command.arguments objectAtIndex:0];
